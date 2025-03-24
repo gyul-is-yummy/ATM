@@ -2,8 +2,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
+//현재 이용자가 어느 상태에 머물러 있는지 
+public enum State
+{
+    Login,
+    SignUp,
+    Bank
+}
+
+
 public class GameManager : MonoBehaviour
 {
+    public State state = State.Login;
+
+    public PopupBank popupBank;
+
     private static GameManager instance;
     public static GameManager Instance
     {
@@ -74,14 +87,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void StartBank(UserData user)
     {
-        //userData = new UserData("윤혜진", 100000, 50000);
-        userData = DataManager.Load("윤혜진");
+        userData = user;
         Refresh();
-
-        DataManager.Save(userData);
-
+        popupBank.BackOpen();
     }
 
     //인스펙터 창에서 값이 변경될 때마다 실행된다?

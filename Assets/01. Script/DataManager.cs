@@ -15,25 +15,24 @@ public static class DataManager
         string saveData = JsonUtility.ToJson(data, true); // true: 보기 좋은 포맷(줄 바꿈 포함)
 
         // JSON 문자열을 파일로 저장
-        File.WriteAllText(Application.persistentDataPath + $"/UserData/{data.userName}.txt", saveData);
+        File.WriteAllText(Application.persistentDataPath + $"/UserData/{data.userID}.txt", saveData);
 
         Debug.Log("데이터 저장됨");
         Debug.Log(Application.persistentDataPath);
     }
 
-    public static UserData Load(string userName)
+    public static UserData Load(string id)
     {
-        //사용자 데이터가 없으면 기본 데이터를 들려 보내줌
-        if (!File.Exists(Application.persistentDataPath + $"/UserData/{userName}.txt"))
+        if (!File.Exists(Application.persistentDataPath + $"/UserData/{id}.txt"))
         {
-            Debug.Log($"사용자 {userName}의 데이터가 없습니다! 기본 데이터를 생성합니다.");
+            Debug.Log($"사용자 {id}의 데이터가 없습니다!");
 
-            return new UserData("윤혜진", 100000, 50000);
+            return null;
         }
 
-        string loadData = File.ReadAllText(Application.persistentDataPath + $"/UserData/{userName}.txt");
+        string loadData = File.ReadAllText(Application.persistentDataPath + $"/UserData/{id}.txt");
 
-        Debug.Log($"사용자 {userName} 데이터 로드됨");
+        Debug.Log($"사용자 {id} 데이터 로드됨");
         return JsonUtility.FromJson<UserData>(loadData);
     }
 }
