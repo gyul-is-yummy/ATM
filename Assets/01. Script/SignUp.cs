@@ -1,14 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
 
 public class SignUp : MonoBehaviour
 {
-    //기본 현금 10만원 / 예금 5만원
-
-    //public GameObject popupSignUp;
-
     public InputField idField;
     public InputField nameField;
     public InputField pwField;
@@ -22,7 +16,12 @@ public class SignUp : MonoBehaviour
     {
         if(InputCheck())
         {
-            UserData newUser = new UserData(nameField.text, 100000, 50000, idField.text, pwField.text);
+            //기본 현금 10만원 / 예금 5만원
+            UserData newUser = new UserData(nameField.text,
+                                             100000,
+                                             50000,
+                                             idField.text,
+                                             pwField.text);
             DataManager.Save(newUser);
 
             GameManager.Instance.popupBank.ErrorPopup("가입이 완료되었습니다.");
@@ -33,8 +32,6 @@ public class SignUp : MonoBehaviour
             //에러창을 띄운다.
             GameManager.Instance.popupBank.ErrorPopup("정보를 확인해주세요.");
         }
-
-        
     }
 
     public bool InputCheck()
@@ -56,7 +53,13 @@ public class SignUp : MonoBehaviour
             guideText.text = "PS가 일치하지 않습니다.";
             return false;
         }
-            
+
+        if(DataManager.CheckData(idField.text))
+        {
+            guideText.text = "이미 존재하는 ID입니다.";
+            return false;
+        }
+    
         return true;      
     }
 }

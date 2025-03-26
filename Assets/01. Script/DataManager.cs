@@ -1,5 +1,6 @@
 using UnityEngine;
-using System.IO; // 파일 입출력을 위한 네임스페이스
+using System.IO;
+using UnityEditor.Build; // 파일 입출력을 위한 네임스페이스
 
 public static class DataManager
 {
@@ -23,10 +24,9 @@ public static class DataManager
 
     public static UserData Load(string id)
     {
-        if (!File.Exists(Application.persistentDataPath + $"/UserData/{id}.txt"))
+        if (!CheckData(id))
         {
             Debug.Log($"사용자 {id}의 데이터가 없습니다!");
-
             return null;
         }
 
@@ -35,4 +35,11 @@ public static class DataManager
         Debug.Log($"사용자 {id} 데이터 로드됨");
         return JsonUtility.FromJson<UserData>(loadData);
     }
+
+    //저장된 데이터 중 ID가 일치하는 데이터가 존재하는지 확인
+    public static bool CheckData(string id)
+    {
+        return File.Exists(Application.persistentDataPath + $"/UserData/{id}.txt");
+    }
+
 }

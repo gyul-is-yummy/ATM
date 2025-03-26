@@ -1,7 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 #nullable enable
+
+public struct temp
+{
+    public InputField input;
+    public int money;
+}
 
 public class PopupBank : MonoBehaviour
 {
@@ -123,8 +130,7 @@ public class PopupBank : MonoBehaviour
     public void ErrorPopup(string message)
     {
         errorText.text = message;
-        popupError.SetActive(true);
-        
+        popupError.SetActive(true);   
     }
 
     public void OnClickErrorBtn()
@@ -144,6 +150,7 @@ public class PopupBank : MonoBehaviour
 
     public void OnClickSendBtn()
     {
+        //입금할 상대의 정보를 불러옴
         UserData? user = DataManager.Load(opponentID.text);
         int money = int.Parse(sendMoney.text); 
 
@@ -158,14 +165,16 @@ public class PopupBank : MonoBehaviour
             return;
         }
 
-        user.bankBalance += int.Parse(sendMoney.text);
+        //Load한 상대 계좌에 입금
+        user.bankBalance += money;
+        //내 계좌에서 입금하는 만큼의 돈을 차감
         GameManager.Instance.Balance -= money;
 
+        //Load하고 수정한 유저 정보를 저장
         DataManager.Save(user);
 
         Debug.Log($"{user.userID}에게 {money}원 송금완료");
         ErrorPopup("송금완료");
-
     }
 }
 

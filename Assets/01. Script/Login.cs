@@ -31,8 +31,4 @@ public class Login : MonoBehaviour
         GameManager.Instance.StartBank(user);
         this.gameObject.SetActive(false);
     }
-
-
-
-
 }

@@ -94,12 +94,6 @@ public class GameManager : MonoBehaviour
         popupBank.BackOpen();
     }
 
-    //인스펙터 창에서 값이 변경될 때마다 실행된다?
-    private void OnValidate()
-    {
-        //Refresh();
-    }
-
     public void NameRefresh()
     {
         Name = userData.userName;
